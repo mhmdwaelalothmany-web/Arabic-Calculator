@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "الآلة الحاسبة"
+description = "آلة حاسبة عربية بسيطة لإجراء عمليات الجمع والطرح والضرب والقسمة مباشرة في المتصفح."
+version = "1.0.0"
+id = "artifacts/arabic-calculator"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22887
+
+[services.development]
+run = "pnpm --filter @workspace/arabic-calculator run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/arabic-calculator", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/arabic-calculator/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22887"
+BASE_PATH = "/"
